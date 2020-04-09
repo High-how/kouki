@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200404074720) do
+ActiveRecord::Schema.define(version: 20200409100716) do
+
+  create_table "members", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer  "user_id"
+    t.string   "name",                      null: false
+    t.string   "tel",         limit: 13,    null: false
+    t.date     "birthday",                  null: false
+    t.string   "postcode",    limit: 8,     null: false
+    t.integer  "city",                      null: false
+    t.string   "block",                     null: false
+    t.string   "building",                  null: false
+    t.string   "secularname"
+    t.text     "dharmaname",  limit: 65535
+    t.date     "deceased"
+    t.boolean  "spring"
+    t.boolean  "summer"
+    t.boolean  "autumn"
+    t.boolean  "winter"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.index ["name"], name: "index_members_on_name", unique: true, using: :btree
+    t.index ["user_id"], name: "index_members_on_user_id", using: :btree
+  end
 
   create_table "users", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "name",                                null: false
@@ -26,4 +48,5 @@ ActiveRecord::Schema.define(version: 20200404074720) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "members", "users"
 end
